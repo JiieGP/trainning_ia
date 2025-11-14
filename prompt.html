@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering - Guía Completa</title>
+    <style>
+        :root {
+            --meli-yellow: #FFE600;
+            --meli-blue: #3483FA;
+            --meli-dark-blue: #2968C8;
+            --meli-green: #00A650;
+            --meli-red: #F23D4F;
+            --meli-bg: #EEEEEE;
+            --meli-white: #FFFFFF;
+            --meli-text: #333333;
+            --meli-gray: #666666;
+            --meli-light-gray: #999999;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Proxima Nova', 'Helvetica Neue', sans-serif;
+            background: var(--meli-bg);
+            color: var(--meli-text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: var(--meli-yellow);
+            padding: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--meli-text);
+        }
+
+        .logo span {
+            color: var(--meli-blue);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .hero {
+            background: var(--meli-white);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--meli-text);
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: var(--meli-blue);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--meli-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: var(--meli-white);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid var(--meli-blue);
+            border-radius: 20px;
+            color: var(--meli-blue);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background: var(--meli-blue);
+            color: white;
+        }
+
+        .tab.active {
+            background: var(--meli-blue);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            background: var(--meli-white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--meli-text);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--meli-yellow);
+        }
+
+        h3 {
+            color: var(--meli-blue);
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .card {
+            background: #F7F7F7;
+            border-left: 4px solid var(--meli-blue);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .card-yellow {
+            border-left-color: var(--meli-yellow);
+            background: #FFFDE7;
+        }
+
+        .card-green {
+            border-left-color: var(--meli-green);
+            background: #E8F5E9;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: var(--meli-text);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .structure-item {
+            background: var(--meli-white);
+            border: 1px solid #DDD;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .structure-number {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--meli-blue);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        .code-comment {
+            color: #6A9955;
+        }
+
+        .code-keyword {
+            color: #569CD6;
+        }
+
+        .code-string {
+            color: #CE9178;
+        }
+
+        .code-section {
+            color: #DCDCAA;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 3px;
+        }
+
+        .tag-blue {
+            background: #E3F2FD;
+            color: var(--meli-blue);
+        }
+
+        .tag-yellow {
+            background: #FFF9C4;
+            color: #F9A825;
+        }
+
+        .tag-green {
+            background: #E8F5E9;
+            color: var(--meli-green);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th {
+            background: var(--meli-blue);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #DDD;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #F7F7F7;
+        }
+
+        .good {
+            color: var(--meli-green);
+            font-weight: 600;
+        }
+
+        .bad {
+            color: var(--meli-red);
+            font-weight: 600;
+        }
+
+        .example-box {
+            border: 2px solid var(--meli-yellow);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            background: #FFFEF0;
+        }
+
+        .example-title {
+            background: var(--meli-yellow);
+            color: var(--meli-text);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--meli-blue);
+        }
+
+        .tip-box strong {
+            color: var(--meli-blue);
+        }
+
+        .warning-box {
+            background: #FFF3E0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #FF9800;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--meli-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--meli-gray);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tabs {
+                justify-content: center;
+            }
+            
+            .tab {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Prompt<span>Engineering</span></div>
+            <div style="font-size: 0.9rem; color: var(--meli-gray);">Guía Profesional</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Domina el Arte del <span>Prompt Engineering</span></h1>
+            <p>Aprende a comunicarte efectivamente con modelos de IA. Desde la estructura básica hasta técnicas avanzadas, con ejemplos prácticos y casos de uso reales.</p>
+        </section>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('fundamentos')">🎯 Fundamentos</button>
+            <button class="tab" onclick="showSection('estructura')">📋 Estructura</button>
+            <button class="tab" onclick="showSection('system-user')">⚙️ System vs User</button>
+            <button class="tab" onclick="showSection('formatos')">📊 Formatos de Salida</button>
+            <button class="tab" onclick="showSection('modelos')">🤖 Tipos de Modelos</button>
+            <button class="tab" onclick="showSection('ejemplos')">💡 Ejemplos Prácticos</button>
+        </div>
+
+        <!-- FUNDAMENTOS -->
+        <section id="fundamentos" class="content-section active">
+            <h2>🎯 Fundamentos del Prompt Engineering</h2>
+            
+            <div class="card card-yellow">
+                <div class="card-title">¿Qué es un Prompt?</div>
+                <p>Es la instrucción o entrada que le das a un modelo de IA para obtener una respuesta específica. Un buen prompt es la diferencia entre una respuesta genérica y una solución precisa.</p>
+            </div>
+
+            <h3>Los 5 Pilares de un Prompt Efectivo</h3>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">1. CLARIDAD</div>
+                    <p>Sé específico y directo. Evita ambigüedades. El modelo no adivina intenciones.</p>
+                    <div class="bad">❌ "Dame información sobre ventas"</div>
+                    <div class="good">✅ "Lista las 5 métricas clave de ventas Q3 2024"</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">2. CONTEXTO</div>
+                    <p>Proporciona el background necesario. ¿Quién eres? ¿Para qué necesitas esto?</p>
+                    <div class="bad">❌ "Escribe un email"</div>
+                    <div class="good">✅ "Escribe un email formal a un cliente B2B que solicita extensión de crédito"</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">3. ROL DEFINIDO</div>
+                    <p>Asigna una persona o expertise específica al modelo.</p>
+                    <div class="bad">❌ "Analiza estos datos"</div>
+                    <div class="good">✅ "Actuá como Data Analyst senior especializado en e-commerce"</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">4. FORMATO ESPERADO</div>
+                    <p>Indica exactamente cómo quieres la respuesta.</p>
+                    <div class="bad">❌ "Dame los resultados"</div>
+                    <div class="good">✅ "Presentá los resultados en tabla con columnas: Métrica, Valor, Variación %"</div>
+                </div>
+            </div>
+
+            <div class="card card-green">
+                <div class="card-title">5. RESTRICCIONES Y LÍMITES</div>
+                <p>Define qué NO debe hacer, longitud máxima, tono, idioma, etc.</p>
+                <p><strong>Ejemplo:</strong> "Máximo 200 palabras. No uses jerga técnica. Tono profesional pero accesible."</p>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Regla de Oro:</strong> Si un humano experto necesitaría más información para completar la tarea, tu prompt también la necesita.
+            </div>
+        </section>
+
+        <!-- ESTRUCTURA -->
+        <section id="estructura" class="content-section">
+            <h2>📋 Estructura del Prompt Profesional</h2>
+            
+            <p>Un prompt bien estructurado sigue un orden lógico que maximiza la comprensión del modelo. Aquí te presento la estructura recomendada:</p>
+
+            <div class="structure-item">
+                <div class="structure-number">1</div>
+                <h3>CONTEXTO Y ROL</h3>
+                <p>Define quién es el modelo y en qué contexto opera.</p>
+                <div class="code-block">
+<span class="code-section"># Contexto y Rol</span>
+Actuá como un <span class="code-keyword">experto en análisis de datos</span>, especializado en 
+<span class="code-string">generación de insights sobre gestiones de agentes de atención 
+al cliente en e-commerce</span>.
+                </div>
+            </div>
+
+            <div class="structure-item">
+                <div class="structure-number">2</div>
+                <h3>OBJETIVO GENERAL</h3>
+                <p>¿Qué debe lograr? Sé específico y medible.</p>
+                <div class="code-block">
+<span class="code-section"># Objetivo General</span>
+Generar insights claros y accionables que identifiquen:
+- Qué hacen bien los <span class="code-keyword">Top Performers</span>
+- Qué deben mejorar los <span class="code-keyword">Low Performers</span>
+                </div>
+            </div>
+
+            <div class="structure-item">
+                <div class="structure-number">3</div>
+                <h3>ESTRUCTURA DEL ENTREGABLE</h3>
+                <p>Define el formato exacto de salida.</p>
+                <div class="code-block">
+<span class="code-section"># Estructura del Entregable</span>
+1. Generación de insights
+   1.a. Insights — Puntos a mejorar
+   1.b. Insights — Puntos positivos
+2. Detección de patrones
+   2.a. Patrones — Puntos a mejorar
+   2.b. Patrones — Puntos positivos
+                </div>
+            </div>
+
+            <div class="structure-item">
+                <div class="structure-number">4</div>
+                <h3>INSTRUCCIONES DETALLADAS</h3>
+                <p>Paso a paso de cómo ejecutar cada parte.</p>
+                <div class="code-block">
+<span class="code-section"># Instrucciones Detalladas</span>
+<span class="code-keyword">1.a. Insights — Puntos a mejorar:</span>
+- Analizá la columna 'COMENTARIO'
+- Generá resumen dividido en <span class="code-string">hasta 3 secciones</span>
+- Cada sección: título descriptivo + detalle explicativo
+- Incluí <span class="code-string">5 ejemplos concretos</span> (número de caso)
+                </div>
+            </div>
+
+            <div class="structure-item">
+                <div class="structure-number">5</div>
+                <h3>INFORMACIÓN CLAVE / RESTRICCIONES</h3>
+                <p>Datos específicos, limitaciones y condiciones.</p>
+                <div class="code-block">
+<span class="code-section"># Información Clave</span>
+- Low Performers: 'EVALUACION_AG' = 'Bajo' o 'Medio-Bajo'
+- Top Performers: 'EVALUACION_AG' = 'Medio-Alto' o 'Alto'
+- <span class="code-keyword">NO</span> generes otro formato de salida
+- Máximo 3 bullet points por sección
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Importante:</strong> El orden importa. Los modelos procesan secuencialmente. Coloca la información más crítica al inicio y al final del prompt (efecto de primacía y recencia).
+            </div>
+        </section>
+
+        <!-- SYSTEM VS USER -->
+        <section id="system-user" class="content-section">
+            <h2>⚙️ System Prompt vs User Prompt</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">🔧 SYSTEM PROMPT</div>
+                    <span class="tag tag-blue">Configuración Base</span>
+                    <span class="tag tag-blue">Persistente</span>
+                    <p style="margin-top: 15px;">Define el comportamiento general del modelo para toda la conversación.</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Personalidad y tono</li>
+                        <li>Rol permanente</li>
+                        <li>Restricciones globales</li>
+                        <li>Formato por defecto</li>
+                    </ul>
+                </div>
+                
+                <div class="card card-yellow">
+                    <div class="card-title">👤 USER PROMPT</div>
+                    <span class="tag tag-yellow">Solicitud Específica</span>
+                    <span class="tag tag-yellow">Por Mensaje</span>
+                    <p style="margin-top: 15px;">La instrucción o pregunta específica del usuario en cada turno.</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Tarea concreta</li>
+                        <li>Datos de entrada</li>
+                        <li>Preguntas específicas</li>
+                        <li>Ajustes puntuales</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">📝 EJEMPLO PRÁCTICO</div>
+                
+                <div class="code-block">
+<span class="code-comment">// SYSTEM PROMPT (se configura una vez)</span>
+<span class="code-section">system:</span> "Eres un asistente de atención al cliente de MercadoLibre.
+- Tono: Profesional pero amigable
+- Idioma: Español latinoamericano
+- Siempre ofrece soluciones concretas
+- Si no sabes algo, indica que derivarás a un especialista
+- Nunca prometas reembolsos sin verificar políticas"
+
+<span class="code-comment">// USER PROMPT (cada interacción)</span>
+<span class="code-section">user:</span> "El cliente pregunta por qué su paquete lleva 10 días 
+sin movimiento en el tracking. Número de orden: #12345678"
+                </div>
+            </div>
+
+            <h3>¿Cuándo usar cada uno?</h3>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Caso de Uso</th>
+                        <th>System Prompt</th>
+                        <th>User Prompt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chatbot de soporte</td>
+                        <td>✅ Define personalidad, límites, tono</td>
+                        <td>✅ Cada consulta del cliente</td>
+                    </tr>
+                    <tr>
+                        <td>Análisis de datos (único)</td>
+                        <td>⚪ Opcional</td>
+                        <td>✅ Todo en el user prompt</td>
+                    </tr>
+                    <tr>
+                        <td>Generación de contenido</td>
+                        <td>✅ Estilo, marca, restricciones</td>
+                        <td>✅ Tema específico a escribir</td>
+                    </tr>
+                    <tr>
+                        <td>API con múltiples usuarios</td>
+                        <td>✅ Configuración compartida</td>
+                        <td>✅ Request individual</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>💡 Pro Tip:</strong> En la API de Claude/GPT, el system prompt tiene "mayor peso". Úsalo para instrucciones que NUNCA deben ser ignoradas, como políticas de seguridad o compliance.
+            </div>
+        </section>
+
+        <!-- FORMATOS DE SALIDA -->
+        <section id="formatos" class="content-section">
+            <h2>📊 Formatos de Salida</h2>
+            
+            <p>Especificar el formato correcto es clave para obtener respuestas útiles y procesables.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">📄 TEXTO ESTRUCTURADO</div>
+                    <span class="tag tag-green">Reportes</span>
+                    <span class="tag tag-green">Análisis</span>
+                    <div class="code-block">
+<span class="code-section">Formato solicitado:</span>
+"Estructura tu respuesta así:
+1. Resumen ejecutivo (3 oraciones)
+2. Hallazgos principales (bullets)
+3. Recomendaciones (máx. 5)
+4. Próximos pasos"
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🔷 JSON</div>
+                    <span class="tag tag-blue">APIs</span>
+                    <span class="tag tag-blue">Automatización</span>
+                    <div class="code-block">
+<span class="code-section">Formato solicitado:</span>
+"Responde SOLO con JSON válido:
+{
+  'producto': string,
+  'precio': number,
+  'disponible': boolean,
+  'categorias': string[]
+}"
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">📊 TABLA/CSV</div>
+                    <span class="tag tag-yellow">Datos</span>
+                    <span class="tag tag-yellow">Comparaciones</span>
+                    <div class="code-block">
+<span class="code-section">Formato solicitado:</span>
+"Presenta los datos en tabla markdown:
+| Métrica | Valor | Tendencia |
+Incluye al menos 10 filas."
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">✅ LISTA/CHECKLIST</div>
+                    <span class="tag tag-green">Tareas</span>
+                    <span class="tag tag-green">Verificación</span>
+                    <div class="code-block">
+<span class="code-section">Formato solicitado:</span>
+"Genera una checklist con:
+- [ ] Tarea pendiente
+- [x] Tarea completada
+Agrupa por prioridad: Alta/Media/Baja"
+                    </div>
+                </div>
+            </div>
+
+            <h3>Control de Longitud y Detalle</h3>
+            
+            <div class="example-box">
+                <div class="example-title">🎚️ NIVELES DE DETALLE</div>
+                <p><strong>Mínimo:</strong> "Respuesta en máximo 50 palabras"</p>
+                <p><strong>Conciso:</strong> "Resumen ejecutivo de 2-3 párrafos"</p>
+                <p><strong>Detallado:</strong> "Análisis exhaustivo con ejemplos, mínimo 500 palabras"</p>
+                <p><strong>Exhaustivo:</strong> "Documentación completa tipo whitepaper"</p>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Evita:</strong> "Dame toda la información posible" - Esto genera respuestas largas y poco útiles. Sé específico sobre qué necesitas y en qué profundidad.
+            </div>
+        </section>
+
+        <!-- TIPOS DE MODELOS -->
+        <section id="modelos" class="content-section">
+            <h2>🤖 Optimización por Tipo de Modelo</h2>
+            
+            <p>Cada modelo tiene fortalezas diferentes. Adapta tu prompt según el modelo que uses.</p>
+
+            <div class="card">
+                <div class="card-title">CLAUDE (Anthropic)</div>
+                <span class="tag tag-blue">Análisis complejo</span>
+                <span class="tag tag-blue">Razonamiento ético</span>
+                <span class="tag tag-blue">Textos largos</span>
+                
+                <h4 style="margin-top: 15px;">✅ Mejores prácticas:</h4>
+                <ul class="checklist">
+                    <li>Aprovecha su capacidad de contexto largo (200K tokens)</li>
+                    <li>Pide que "piense paso a paso" para razonamiento complejo</li>
+                    <li>Especifica formato XML para estructuras complejas</li>
+                    <li>Usa para análisis ético y consideración de múltiples perspectivas</li>
+                </ul>
+                
+                <div class="code-block">
+<span class="code-comment">// Ejemplo optimizado para Claude</span>
+"Analizá este documento de 50 páginas. Antes de responder:
+1. Identificá los temas principales
+2. Evaluá la validez de cada argumento
+3. Considerá posibles sesgos
+Luego presentá tu análisis estructurado."
+                </div>
+            </div>
+
+            <div class="card card-yellow">
+                <div class="card-title">GPT-4 (OpenAI)</div>
+                <span class="tag tag-yellow">Creatividad</span>
+                <span class="tag tag-yellow">Código</span>
+                <span class="tag tag-yellow">Multimodal</span>
+                
+                <h4 style="margin-top: 15px;">✅ Mejores prácticas:</h4>
+                <ul class="checklist">
+                    <li>Excelente para generación creativa y coding</li>
+                    <li>Usa "few-shot learning" con ejemplos</li>
+                    <li>Aprovecha capacidades de visión (GPT-4V)</li>
+                    <li>Funciona bien con instrucciones en inglés</li>
+                </ul>
+            </div>
+
+            <div class="card card-green">
+                <div class="card-title">GEMINI (Google)</div>
+                <span class="tag tag-green">Multimodal nativo</span>
+                <span class="tag tag-green">Búsqueda</span>
+                <span class="tag tag-green">Contexto 1M+</span>
+                
+                <h4 style="margin-top: 15px;">✅ Mejores prácticas:</h4>
+                <ul class="checklist">
+                    <li>Ideal para análisis de múltiples documentos</li>
+                    <li>Aprovecha integración con Google Search</li>
+                    <li>Excelente para video y audio análisis</li>
+                    <li>Usa para fact-checking con fuentes verificables</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Consejo Universal:</strong> Independiente del modelo, siempre prueba tu prompt con casos edge y ajusta. Lo que funciona en un modelo puede necesitar tweaking en otro.
+            </div>
+        </section>
+
+        <!-- EJEMPLOS PRÁCTICOS -->
+        <section id="ejemplos" class="content-section">
+            <h2>💡 Ejemplos Prácticos por Caso de Uso</h2>
+
+            <div class="example-box">
+                <div class="example-title">🛒 E-COMMERCE: Análisis de Reviews</div>
+                <div class="code-block">
+<span class="code-section"># Contexto</span>
+Eres un analista de experiencia del cliente en e-commerce.
+
+<span class="code-section"># Objetivo</span>
+Analizar 100 reviews de producto para identificar patrones de satisfacción.
+
+<span class="code-section"># Entregable</span>
+1. Top 3 aspectos positivos más mencionados (con % de frecuencia)
+2. Top 3 quejas recurrentes (con % de frecuencia)
+3. Sentiment score general (1-10)
+4. 3 recomendaciones accionables para producto
+
+<span class="code-section"># Restricciones</span>
+- Solo basate en los reviews proporcionados
+- No inventes datos
+- Cita ejemplos específicos con ID de review
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">📧 COMUNICACIÓN: Email Profesional</div>
+                <div class="code-block">
+<span class="code-section"># Tarea</span>
+Redactá un email para cliente que reclama reembolso.
+
+<span class="code-section"># Contexto</span>
+- Producto: Laptop
+- Problema: Llegó con pantalla rota
+- Política: Reembolso completo en 48hs hábiles
+- Nombre cliente: María García
+
+<span class="code-section"># Tono</span>
+Empático, profesional, orientado a solución
+
+<span class="code-section"># Estructura</span>
+1. Disculpa genuina
+2. Reconocimiento del problema
+3. Solución concreta con timeline
+4. Compensación adicional (10% descuento próxima compra)
+5. Cierre cordial
+
+<span class="code-section"># Longitud</span>
+150-200 palabras máximo
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">📊 DATA: Generación de SQL</div>
+                <div class="code-block">
+<span class="code-section"># Rol</span>
+Eres un DBA experto en PostgreSQL.
+
+<span class="code-section"># Tarea</span>
+Genera query para obtener ventas por categoría.
+
+<span class="code-section"># Schema</span>
+- orders (id, user_id, total, created_at)
+- order_items (order_id, product_id, quantity, price)
+- products (id, name, category_id)
+- categories (id, name)
+
+<span class="code-section"># Requisitos</span>
+- Ventas últimos 30 días
+- Agrupado por categoría
+- Ordenado de mayor a menor
+- Incluir: nombre categoría, total ventas, cantidad órdenes
+
+<span class="code-section"># Output</span>
+Solo el código SQL, sin explicaciones.
+Optimizado para performance.
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🎯 MERCADO LIBRE: Análisis de Agentes (Ejemplo Real)</div>
+                <div class="code-block">
+<span class="code-section"># Contexto y Rol</span>
+Actuá como experto en análisis de datos, especializado en 
+insights sobre gestiones de agentes de atención al cliente en e-commerce.
+
+<span class="code-section"># Objetivo General</span>
+Generar insights claros y accionables:
+- Top Performers: qué hacen bien
+- Low Performers: qué deben mejorar
+
+<span class="code-section"># Estructura del Entregable</span>
+1. Generación de insights
+   1.a. Insights — Puntos a mejorar
+   1.b. Insights — Puntos positivos
+2. Detección de patrones
+   2.a. Patrones — Puntos a mejorar  
+   2.b. Patrones — Puntos positivos
+
+<span class="code-section"># Instrucciones Detalladas</span>
+1.a. Analizá columna 'COMENTARIO':
+- Dividí en hasta 3 secciones
+- Cada sección: título + detalle explicativo
+- Incluí 5 ejemplos (número de caso)
+
+<span class="code-section"># Información Clave</span>
+- Low Performers: EVALUACION_AG = 'Bajo' o 'Medio-Bajo'
+- Top Performers: EVALUACION_AG = 'Medio-Alto' o 'Alto'
+- Base filtrada por SENTENCIA_R
+- NO generes otro formato de salida
+                </div>
+            </div>
+
+            <h3>📝 Checklist Final para tu Prompt</h3>
+            
+            <ul class="checklist">
+                <li>¿Definí claramente el ROL del modelo?</li>
+                <li>¿El OBJETIVO es específico y medible?</li>
+                <li>¿Proporcioné suficiente CONTEXTO?</li>
+                <li>¿Especifiqué el FORMATO de salida exacto?</li>
+                <li>¿Incluí RESTRICCIONES y límites claros?</li>
+                <li>¿Di EJEMPLOS de lo que espero (si aplica)?</li>
+                <li>¿Eliminé ambigüedades?</li>
+                <li>¿Es replicable y consistente?</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>🚀 Última recomendación:</strong> Itera, prueba y refina. El mejor prompt es el que evoluciona con tus necesidades. Documenta qué funciona y qué no para cada caso de uso.
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>Guía de Prompt Engineering | Versión 1.0 | 2024</p>
+        <p style="margin-top: 10px; font-size: 0.85rem;">Diseñado para profesionales que buscan maximizar el potencial de la IA</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
