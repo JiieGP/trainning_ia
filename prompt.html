@@ -152,6 +152,12 @@
             margin: 25px 0 15px 0;
         }
 
+        h4 {
+            color: var(--meli-text);
+            font-size: 1.1rem;
+            margin: 15px 0 10px 0;
+        }
+
         .card {
             background: #F7F7F7;
             border-left: 4px solid var(--meli-blue);
@@ -229,6 +235,16 @@
             color: #DCDCAA;
         }
 
+        .code-label {
+            display: block;
+            background: var(--meli-yellow);
+            color: var(--meli-text);
+            padding: 5px 10px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+        }
+
         .tag {
             display: inline-block;
             padding: 4px 12px;
@@ -257,6 +273,13 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
         .comparison-table th {
@@ -264,11 +287,13 @@
             color: white;
             padding: 12px;
             text-align: left;
+            font-weight: 600;
         }
 
         .comparison-table td {
             padding: 12px;
             border-bottom: 1px solid #DDD;
+            vertical-align: top;
         }
 
         .comparison-table tr:nth-child(even) {
@@ -315,6 +340,7 @@
             padding: 20px;
             border-radius: 8px;
             border-left: 5px solid var(--meli-blue);
+            margin: 20px 0;
         }
 
         .tip-box strong {
@@ -326,10 +352,12 @@
             padding: 20px;
             border-radius: 8px;
             border-left: 5px solid #FF9800;
+            margin: 20px 0;
         }
 
         .checklist {
             list-style: none;
+            padding-left: 0;
         }
 
         .checklist li {
@@ -345,6 +373,154 @@
             color: var(--meli-green);
             font-weight: bold;
             font-size: 1.2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .badge-system {
+            background: var(--meli-blue);
+            color: white;
+        }
+
+        .badge-user {
+            background: var(--meli-green);
+            color: white;
+        }
+
+        .highlight {
+            background: #FFF9C4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .intro {
+            background: #F0F7FF;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--meli-blue);
+        }
+
+        .intro h2 {
+            border-bottom: none;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .prompt-type {
+            background: var(--meli-white);
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .prompt-type h3 {
+            margin-top: 0;
+        }
+
+        .description {
+            color: var(--meli-gray);
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .characteristics {
+            background: #F7F7F7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .characteristics h4 {
+            color: var(--meli-blue);
+            margin-top: 0;
+        }
+
+        .characteristics ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .characteristics li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .use-case {
+            background: linear-gradient(135deg, #FFFEF0, #FFF9C4);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--meli-yellow);
+        }
+
+        .use-case h4 {
+            color: var(--meli-text);
+            margin-bottom: 15px;
+        }
+
+        .use-case-title {
+            color: var(--meli-blue);
+            font-weight: bold;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--meli-white);
+        }
+
+        .table-container th {
+            background: var(--meli-blue);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .table-container td {
+            padding: 15px;
+            border-bottom: 1px solid #DDD;
+            vertical-align: top;
+        }
+
+        .table-container tr:nth-child(even) {
+            background: #F7F7F7;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--meli-yellow), #FFD700);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .cta-box h3 {
+            margin-top: 0;
+            color: var(--meli-text);
+        }
+
+        .icon {
+            font-size: 1.3rem;
+            margin-right: 8px;
         }
 
         .footer {
@@ -367,6 +543,19 @@
                 padding: 8px 15px;
                 font-size: 0.9rem;
             }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                font-size: 0.85rem;
+            }
+
+            .table-container th,
+            .table-container td {
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -385,12 +574,12 @@
         </section>
 
         <div class="tabs">
-            <button class="tab active" onclick="showSection('fundamentos')">🎯 Fundamentos</button>
-            <button class="tab" onclick="showSection('estructura')">📋 Estructura</button>
-            <button class="tab" onclick="showSection('system-user')">⚙️ System vs User</button>
-            <button class="tab" onclick="showSection('formatos')">📊 Formatos de Salida</button>
-            <button class="tab" onclick="showSection('modelos')">🤖 Tipos de Modelos</button>
-            <button class="tab" onclick="showSection('ejemplos')">💡 Ejemplos Prácticos</button>
+            <button class="tab active" onclick="showSection(event, 'fundamentos')">🎯 Fundamentos</button>
+            <button class="tab" onclick="showSection(event, 'estructura')">📋 Estructura</button>
+            <button class="tab" onclick="showSection(event, 'system-user')">⚙️ System vs User</button>
+            <button class="tab" onclick="showSection(event, 'formatos')">📊 Formatos de Salida</button>
+            <button class="tab" onclick="showSection(event, 'modelos')">🤖 Tipos de Modelos</button>
+            <button class="tab" onclick="showSection(event, 'ejemplos')">💡 Ejemplos Prácticos</button>
         </div>
 
         <!-- FUNDAMENTOS -->
@@ -526,89 +715,240 @@ Generar insights claros y accionables que identifiquen:
         <section id="system-user" class="content-section">
             <h2>⚙️ System Prompt vs User Prompt</h2>
 
-            <div class="grid-2">
-                <div class="card">
-                    <div class="card-title">🔧 SYSTEM PROMPT</div>
-                    <span class="tag tag-blue">Configuración Base</span>
-                    <span class="tag tag-blue">Persistente</span>
-                    <p style="margin-top: 15px;">Define el comportamiento general del modelo para toda la conversación.</p>
-                    <ul style="margin-top: 10px;">
-                        <li>Personalidad y tono</li>
-                        <li>Rol permanente</li>
-                        <li>Restricciones globales</li>
-                        <li>Formato por defecto</li>
-                    </ul>
-                </div>
+            <div class="intro">
+                <h2>¿Qué es Prompt Engineering?</h2>
+                <p>
+                    El <strong>Prompt Engineering</strong> es el arte y la ciencia de diseñar instrucciones efectivas para modelos de lenguaje de IA. 
+                    Entender la diferencia entre <strong>System Prompts</strong> y <strong>User Prompts</strong> es fundamental para construir 
+                    aplicaciones de IA robustas, predecibles y alineadas con tus objetivos de negocio.
+                </p>
+            </div>
+
+            <!-- SYSTEM PROMPT -->
+            <div class="section">
+                <h3><span class="icon">⚙️</span> System Prompt</h3>
                 
-                <div class="card card-yellow">
-                    <div class="card-title">👤 USER PROMPT</div>
-                    <span class="tag tag-yellow">Solicitud Específica</span>
-                    <span class="tag tag-yellow">Por Mensaje</span>
-                    <p style="margin-top: 15px;">La instrucción o pregunta específica del usuario en cada turno.</p>
-                    <ul style="margin-top: 10px;">
-                        <li>Tarea concreta</li>
-                        <li>Datos de entrada</li>
-                        <li>Preguntas específicas</li>
-                        <li>Ajustes puntuales</li>
-                    </ul>
+                <div class="prompt-type">
+                    <h4>
+                        <span class="badge badge-system">System</span>
+                        Instrucciones de Configuración del Sistema
+                    </h4>
+                    
+                    <p class="description">
+                        El <strong>System Prompt</strong> define el comportamiento global, personalidad y reglas fundamentales del modelo de IA. 
+                        Se configura una vez y permanece constante durante toda la conversación. Es la "constitución" que gobierna cómo debe actuar tu asistente.
+                    </p>
+
+                    <div class="characteristics">
+                        <h4>Características Clave:</h4>
+                        <ul>
+                            <li><strong>Persistente:</strong> Se mantiene activo durante toda la sesión</li>
+                            <li><strong>Invisible para el usuario:</strong> El cliente final no lo ve directamente</li>
+                            <li><strong>Define la personalidad:</strong> Establece tono, estilo y comportamiento</li>
+                            <li><strong>Reglas de negocio:</strong> Implementa políticas y restricciones corporativas</li>
+                            <li><strong>Control de calidad:</strong> Garantiza consistencia en las respuestas</li>
+                        </ul>
+                    </div>
+
+                    <div class="use-case">
+                        <h4><span class="icon">🛍️</span> <span class="use-case-title">Caso de Uso: Mercado Libre</span></h4>
+                        <p><strong>Contexto:</strong> Asistente Virtual de Atención al Cliente para Mercado Libre</p>
+                        
+                        <div class="code-block">
+                            <span class="code-label">SYSTEM PROMPT - Asistente ML</span>
+                            <pre style="margin: 0; white-space: pre-wrap;">Eres un asistente virtual de atención al cliente de Mercado Libre, la plataforma de e-commerce líder en América Latina.
+
+Tu misión es ayudar a compradores y vendedores con:
+- Consultas sobre pedidos, envíos y devoluciones
+- Información sobre Mercado Pago y medios de pago
+- Resolución de disputas y reclamos
+- Guía para publicar productos
+
+PERSONALIDAD Y TONO:
+- Amable, empático y profesional
+- Usa un lenguaje claro y accesible (nivel B1-B2)
+- Proactivo: anticipa necesidades del usuario
+- Celebra cuando resuelves un problema exitosamente
+
+REGLAS OBLIGATORIAS:
+1. NUNCA compartas información personal de otros usuarios
+2. NUNCA proceses pagos directamente (deriva a Mercado Pago)
+3. Si no sabes algo, admítelo y deriva al equipo humano
+4. Siempre verifica el ID del pedido antes de dar información
+5. Mantén el foco en resolver el problema rápidamente
+
+LÍMITES:
+- No puedes acceder a contraseñas o datos bancarios
+- No puedes modificar precios de publicaciones activas
+- No emites reembolsos sin validación del equipo de fraude</pre>
+                        </div>
+
+                        <p><strong>Resultado:</strong> Todos los clientes reciben atención consistente, segura y alineada con las políticas de Mercado Libre, sin importar quién pregunte o cuándo.</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="example-box">
-                <div class="example-title">📝 EJEMPLO PRÁCTICO</div>
+            <!-- USER PROMPT -->
+            <div class="section">
+                <h3><span class="icon">💬</span> User Prompt</h3>
                 
-                <div class="code-block">
-<span class="code-comment">// SYSTEM PROMPT (se configura una vez)</span>
-<span class="code-section">system:</span> "Eres un asistente de atención al cliente de MercadoLibre.
-- Tono: Profesional pero amigable
-- Idioma: Español latinoamericano
-- Siempre ofrece soluciones concretas
-- Si no sabes algo, indica que derivarás a un especialista
-- Nunca prometas reembolsos sin verificar políticas"
+                <div class="prompt-type">
+                    <h4>
+                        <span class="badge badge-user">User</span>
+                        Consultas e Instrucciones Específicas
+                    </h4>
+                    
+                    <p class="description">
+                        El <strong>User Prompt</strong> es la entrada específica del usuario en cada interacción. Es variable, contextual y representa 
+                        la necesidad concreta del momento. Aquí es donde el usuario expresa su problema, pregunta o solicitud particular.
+                    </p>
 
-<span class="code-comment">// USER PROMPT (cada interacción)</span>
-<span class="code-section">user:</span> "El cliente pregunta por qué su paquete lleva 10 días 
-sin movimiento en el tracking. Número de orden: #12345678"
+                    <div class="characteristics">
+                        <h4>Características Clave:</h4>
+                        <ul>
+                            <li><strong>Dinámico:</strong> Cambia en cada mensaje o interacción</li>
+                            <li><strong>Contextual:</strong> Específico a la situación del usuario</li>
+                            <li><strong>Visible:</strong> El usuario lo escribe y puede modificarlo</li>
+                            <li><strong>Variable en calidad:</strong> Puede ser preciso o vago</li>
+                            <li><strong>Guiado por el system:</strong> La respuesta sigue las reglas del system prompt</li>
+                        </ul>
+                    </div>
+
+                    <div class="use-case">
+                        <h4><span class="icon">🛍️</span> <span class="use-case-title">Caso de Uso: Mercado Libre</span></h4>
+                        <p><strong>Contexto:</strong> Consultas reales de usuarios del asistente virtual</p>
+                        
+                        <div class="code-block">
+                            <span class="code-label">USER PROMPT - Ejemplos Reales</span>
+                            <pre style="margin: 0; white-space: pre-wrap;">Ejemplo 1:
+"Hola, compré unos auriculares hace 3 días (pedido #ML123456789) 
+y aún no me llegan. ¿Qué pasó con mi envío?"
+
+Ejemplo 2:
+"Quiero devolver una camisa que pedí porque me quedó chica. 
+¿Cómo hago?"
+
+Ejemplo 3:
+"Soy vendedor nuevo y no sé cómo calcular el costo de envío 
+para mis productos. ¿Me ayudas?"
+
+Ejemplo 4:
+"Me cobraron dos veces el mismo pedido en Mercado Pago!!!!! 
+Necesito mi reembolso YA"</pre>
+                        </div>
+
+                        <p><strong>Resultado:</strong> Cada consulta es única, pero el asistente responde consistentemente según las reglas del System Prompt: verifica IDs, mantiene el tono empático, deriva lo que no puede resolver, y nunca comparte datos sensibles.</p>
+                    </div>
                 </div>
             </div>
 
-            <h3>¿Cuándo usar cada uno?</h3>
-            
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Caso de Uso</th>
-                        <th>System Prompt</th>
-                        <th>User Prompt</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Chatbot de soporte</td>
-                        <td>✅ Define personalidad, límites, tono</td>
-                        <td>✅ Cada consulta del cliente</td>
-                    </tr>
-                    <tr>
-                        <td>Análisis de datos (único)</td>
-                        <td>⚪ Opcional</td>
-                        <td>✅ Todo en el user prompt</td>
-                    </tr>
-                    <tr>
-                        <td>Generación de contenido</td>
-                        <td>✅ Estilo, marca, restricciones</td>
-                        <td>✅ Tema específico a escribir</td>
-                    </tr>
-                    <tr>
-                        <td>API con múltiples usuarios</td>
-                        <td>✅ Configuración compartida</td>
-                        <td>✅ Request individual</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="tip-box">
-                <strong>💡 Pro Tip:</strong> En la API de Claude/GPT, el system prompt tiene "mayor peso". Úsalo para instrucciones que NUNCA deben ser ignoradas, como políticas de seguridad o compliance.
+            <!-- TABLA COMPARATIVA -->
+            <div class="section">
+                <h3><span class="icon">📊</span> Comparación: System vs User Prompt</h3>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>System Prompt</th>
+                                <th>User Prompt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Propósito</strong></td>
+                                <td>Definir comportamiento, personalidad y reglas del asistente</td>
+                                <td>Expresar la necesidad específica del usuario</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quién lo crea</strong></td>
+                                <td>Desarrolladores, ingenieros de IA, equipos de producto</td>
+                                <td>El usuario final en cada interacción</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frecuencia de cambio</strong></td>
+                                <td>Estático - se actualiza ocasionalmente</td>
+                                <td>Dinámico - cambia en cada mensaje</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Visibilidad</strong></td>
+                                <td>Oculto para el usuario final</td>
+                                <td>Completamente visible (es lo que el usuario escribe)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Duración</strong></td>
+                                <td>Permanece durante toda la sesión/conversación</td>
+                                <td>Único por interacción</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nivel de control</strong></td>
+                                <td><span class="highlight">Alto control</span> - define límites estrictos</td>
+                                <td><span class="highlight">Bajo control</span> - depende del usuario</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Complejidad</strong></td>
+                                <td>Complejo - requiere diseño estratégico</td>
+                                <td>Variable - desde simple hasta muy específico</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ejemplo en ML</strong></td>
+                                <td>"Eres un asistente de Mercado Libre que no comparte datos personales..."</td>
+                                <td>"¿Dónde está mi pedido ML123456789?"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Impacto</strong></td>
+                                <td>Garantiza consistencia, seguridad y alineación con la marca</td>
+                                <td>Determina la relevancia de la respuesta específica</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Modificación</strong></td>
+                                <td>Requiere actualización de código/configuración</td>
+                                <td>El usuario puede reformular libremente</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Testing</strong></td>
+                                <td>Se prueba con múltiples escenarios antes de producción</td>
+                                <td>Impredecible - puede contener errores o ambigüedades</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Riesgo de seguridad</strong></td>
+                                <td>Bajo - controlado por el equipo técnico</td>
+                                <td>Alto - puede contener intentos de "jailbreak" o manipulación</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+            <!-- CTA BOX -->
+            <div class="cta-box">
+                <h3>💡 Mejores Prácticas</h3>
+                <p>
+                    <strong>System Prompt:</strong> Invierte tiempo en diseñarlo meticulosamente. Es tu póliza de seguro contra comportamientos inesperados.<br><br>
+                    <strong>User Prompt:</strong> Educa a tus usuarios sobre cómo formular consultas claras, pero diseña tu sistema para manejar inputs imperfectos.
+                </p>
+            </div>
+
+            <!-- CONCLUSIÓN -->
+            <div class="section">
+                <h3><span class="icon">🎯</span> Conclusión</h3>
+                <p style="font-size: 1.1em; line-height: 1.8;">
+                    La diferencia entre <strong>System Prompts</strong> y <strong>User Prompts</strong> es fundamental en prompt engineering. 
+                    El System Prompt es tu arquitectura de control, tu garantía de calidad y tu defensa contra usos indebidos. 
+                    El User Prompt es la expresión de necesidades reales que tu sistema debe interpretar inteligentemente.
+                </p>
+                <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                    En el contexto de <strong>Mercado Libre</strong>, un System Prompt bien diseñado asegura que millones de usuarios reciban 
+                    atención consistente, segura y alineada con los valores de la marca, mientras que los User Prompts variables permiten 
+                    personalizar cada interacción según las necesidades únicas de cada cliente.
+                </p>
+                <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                    <strong>El verdadero poder está en la sinergia:</strong> un System Prompt robusto que interpreta User Prompts impredecibles 
+                    de manera confiable y útil. Esa es la esencia de una aplicación de IA de calidad empresarial.
+                </p>
+            </div>
+
         </section>
 
         <!-- FORMATOS DE SALIDA -->
@@ -893,16 +1233,22 @@ Generar insights claros y accionables:
     </footer>
 
     <script>
-        function showSection(sectionId) {
+        function showSection(event, sectionId) {
+            // Ocultar todas las secciones
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
+            
+            // Desactivar todos los tabs
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
+            // Mostrar la sección seleccionada
             document.getElementById(sectionId).classList.add('active');
-            event.target.classList.add('active');
+            
+            // Activar el tab clickeado
+            event.currentTarget.classList.add('active');
         }
     </script>
 </body>
