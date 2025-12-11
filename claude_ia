@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa: Reportes HTML con Claude</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        /* Colores de Mercado Libre */
+        :root {
+            --ml-yellow: #FFE600;
+            --ml-blue: #3483FA;
+            --ml-dark-blue: #2968C8;
+            --ml-light-blue: #E6F3FF;
+            --ml-green: #00A650;
+            --ml-gray: #666;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--ml-blue) 0%, var(--ml-dark-blue) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .alert {
+            background: var(--ml-yellow);
+            color: #333;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            border-left: 5px solid var(--ml-blue);
+            font-weight: 500;
+        }
+
+        .section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: var(--ml-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--ml-yellow);
+        }
+
+        h3 {
+            color: var(--ml-dark-blue);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 2px solid var(--ml-light-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "💻 Ejemplo de Prompt";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--ml-blue);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        pre {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #2d3748;
+        }
+
+        .tip {
+            background: var(--ml-light-blue);
+            border-left: 4px solid var(--ml-blue);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip::before {
+            content: "💡 Consejo Pro: ";
+            font-weight: 700;
+            color: var(--ml-blue);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning::before {
+            content: "⚠️ Importante: ";
+            font-weight: 700;
+            color: #856404;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid var(--ml-light-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(52, 131, 250, 0.15);
+        }
+
+        .card h4 {
+            color: var(--ml-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--ml-green);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.2rem;
+        }
+
+        .badge.pro {
+            background: var(--ml-blue);
+        }
+
+        .badge.limit {
+            background: #ff6b6b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+        }
+
+        th {
+            background: var(--ml-blue);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: var(--ml-light-blue);
+        }
+
+        .button {
+            display: inline-block;
+            background: var(--ml-blue);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .button:hover {
+            background: var(--ml-dark-blue);
+        }
+
+        .button.secondary {
+            background: var(--ml-green);
+        }
+
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background: var(--ml-light-blue);
+            border-radius: 8px;
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--ml-blue);
+            color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .highlight {
+            background: var(--ml-yellow);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 0 1rem;
+            }
+            .section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🚀 Guía Completa: Reportes HTML con Claude</h1>
+            <p class="subtitle">Aprende a generar reportes profesionales y publicarlos de manera efectiva</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="alert">
+            <strong>¡Bienvenido!</strong> Esta guía te enseñará a crear reportes HTML profesionales usando Claude, desde el prompt perfecto hasta la publicación final. Todo lo que necesitas saber en un solo lugar.
+        </div>
+
+        <!-- Sección 1: Qué es y por qué -->
+        <div class="section">
+            <h2>📊 ¿Por qué Generar Reportes HTML con Claude?</h2>
+            
+            <p>Claude es una herramienta poderosa para crear reportes HTML porque combina:</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4>🎨 Diseño Profesional</h4>
+                    <p>Genera código HTML/CSS limpio y responsive que se ve profesional sin necesidad de ser diseñador.</p>
+                </div>
+                <div class="card">
+                    <h4>⚡ Rapidez</h4>
+                    <p>Crea reportes completos en minutos, no en horas. Iteraciones rápidas y ajustes inmediatos.</p>
+                </div>
+                <div class="card">
+                    <h4>🔧 Personalización</h4>
+                    <p>Adapta colores, estilos y estructura según tu marca o necesidades específicas.</p>
+                </div>
+                <div class="card">
+                    <h4>📱 Responsivo</h4>
+                    <p>Los reportes se adaptan automáticamente a móviles, tablets y escritorio.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 2: Estructura del Prompt Perfecto -->
+        <div class="section">
+            <h2>✍️ Cómo Crear el Prompt Perfecto</h2>
+            
+            <h3>Anatomía de un Buen Prompt</h3>
+            <p>Un prompt efectivo para reportes HTML debe incluir estos elementos clave:</p>
+
+            <ol class="steps">
+                <li><strong>Contexto y objetivo:</strong> Explica qué tipo de reporte necesitas y para qué se usará.</li>
+                <li><strong>Estructura deseada:</strong> Describe las secciones principales del reporte.</li>
+                <li><strong>Datos a incluir:</strong> Proporciona la información que debe aparecer (o ejemplos).</li>
+                <li><strong>Estilo visual:</strong> Define colores, tipografía y estilo general.</li>
+                <li><strong>Funcionalidades:</strong> Indica si necesitas gráficos, tablas, interactividad, etc.</li>
+            </ol>
+
+            <div class="tip">
+                Sé específico pero no abrumador. Empieza con lo esencial y refiná iterativamente.
+            </div>
+
+            <h3>Ejemplo de Prompt Básico</h3>
+            <div class="code-block">
+                <pre>Crea un reporte HTML para un análisis de ventas mensuales que incluya:
+
+- Título: "Reporte de Ventas - Noviembre 2024"
+- Sección de resumen con métricas clave (ventas totales, crecimiento, productos top)
+- Tabla con las 10 categorías más vendidas
+- Gráfico de barras simple con ventas por semana
+- Sección de conclusiones
+
+Estilo visual:
+- Colores: Azul corporativo (#3483FA) y amarillo (#FFE600)
+- Diseño limpio y profesional
+- Responsive (que se vea bien en móvil)
+- Incluye CSS dentro del HTML
+
+Datos de ejemplo:
+- Ventas totales: $150,000
+- Crecimiento: +15%
+- Top 3 productos: Laptops, Smartphones, Tablets</pre>
+            </div>
+
+            <h3>Ejemplo de Prompt Avanzado</h3>
+            <div class="code-block">
+                <pre>Necesito un reporte HTML interactivo para presentar métricas de un proyecto tecnológico.
+
+**Estructura:**
+1. Header con logo y título del proyecto
+2. Dashboard con 4 KPIs principales (con iconos)
+3. Sección de progreso del proyecto (barra de progreso animada)
+4. Tabla de tareas completadas vs pendientes
+5. Gráfico de líneas mostrando velocidad del equipo (últimas 8 semanas)
+6. Sección de riesgos identificados (tarjetas con semáforo)
+7. Footer con fecha de generación
+
+**Estilo:**
+- Inspirado en Mercado Libre (azul #3483FA, amarillo #FFE600)
+- Tipografía moderna y legible
+- Sombras sutiles y esquinas redondeadas
+- Animaciones suaves en hover
+- Modo impresión optimizado
+
+**Funcionalidades:**
+- Tooltips en los KPIs con explicaciones
+- Tabla filtrable por estado
+- Gráficos con Chart.js desde CDN
+- Exportable a PDF (CSS print-friendly)
+
+**Datos:**
+Proyecto: "Sistema de Pagos V2.0"
+KPIs: 75% completado, 23 tareas cerradas, 8 pendientes, 2 bloqueadas
+Riesgos: Integración API (medio), Pruebas de carga (bajo)</pre>
+            </div>
+
+            <div class="warning">
+                Si tu prompt es muy largo (>2000 palabras) o muy complejo, considera dividirlo en fases: primero estructura, luego datos, finalmente estilo.
+            </div>
+        </div>
+
+        <!-- Sección 3: Proceso de Generación -->
+        <div class="section">
+            <h2>⚙️ Proceso de Generación con Claude</h2>
+            
+            <h3>¿Cómo Funciona?</h3>
+            <p>Claude genera el código HTML de la siguiente manera:</p>
+
+            <ol class="steps">
+                <li><strong>Análisis del prompt:</strong> Claude interpreta tus requisitos y estructura mental del reporte.</li>
+                <li><strong>Generación de código:</strong> Crea HTML semántico con CSS embebido o en etiqueta &lt;style&gt;.</li>
+                <li><strong>Presentación:</strong> Claude guarda el archivo en <code>/mnt/user-data/outputs/</code> y te proporciona un enlace de descarga.</li>
+                <li><strong>Iteración:</strong> Puedes pedir ajustes, cambios de color, agregar secciones, etc.</li>
+            </ol>
+
+            <div class="tip">
+                Claude puede crear archivos directamente listos para descargar. Solo pide "crea el archivo HTML completo y proporcióname el enlace de descarga".
+            </div>
+
+            <h3>Características Técnicas del Código Generado</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>HTML5 Semántico</h4>
+                    <p>Usa etiquetas apropiadas: &lt;header&gt;, &lt;section&gt;, &lt;article&gt;, mejorando SEO y accesibilidad.</p>
+                </div>
+                <div class="card">
+                    <h4>CSS Moderno</h4>
+                    <p>Flexbox, Grid, variables CSS, animaciones, media queries para responsive.</p>
+                </div>
+                <div class="card">
+                    <h4>JavaScript (opcional)</h4>
+                    <p>Para interactividad: filtros, gráficos con Chart.js, búsqueda en tablas, etc.</p>
+                </div>
+                <div class="card">
+                    <h4>Sin Dependencias</h4>
+                    <p>Todo en un solo archivo HTML (o CDN para librerías), fácil de compartir.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 4: Opciones de Publicación -->
+        <div class="section">
+            <h2>🌐 Opciones para Publicar tu Reporte</h2>
+
+            <h3>1. GitHub Pages (Recomendado para público)</h3>
+            <p>Publica tu reporte gratuitamente con una URL personalizada.</p>
+            
+            <ol class="steps">
+                <li>Crea un repositorio en GitHub (público o privado con GitHub Pro)</li>
+                <li>Sube tu archivo HTML (renómbralo a <code>index.html</code>)</li>
+                <li>Ve a Settings → Pages → Selecciona la rama (main) → Save</li>
+                <li>Tu reporte estará en: <code>https://tuusuario.github.io/nombre-repo/</code></li>
+            </ol>
+
+            <div class="tip">
+                GitHub Pages es gratis, rápido y con SSL automático. Ideal para reportes públicos o compartir con clientes.
+            </div>
+
+            <h3>2. Compartir Directamente desde Claude</h3>
+            <p>Claude genera el archivo y te proporciona un enlace de descarga. Luego puedes:</p>
+            <ul>
+                <li>Enviarlo por email como adjunto</li>
+                <li>Compartirlo en Google Drive, Dropbox, etc.</li>
+                <li>Abrirlo localmente en tu navegador</li>
+            </ul>
+
+            <h3>3. Netlify (Sin configuración)</h3>
+            <ol class="steps">
+                <li>Crea cuenta gratuita en <a href="https://netlify.com" class="button">Netlify</a></li>
+                <li>Arrastra y suelta tu archivo HTML en la interfaz</li>
+                <li>¡Listo! URL instantánea generada</li>
+            </ol>
+
+            <h3>4. Vercel (Para desarrolladores)</h3>
+            <p>Similar a Netlify, con CLI para deploy automático desde terminal.</p>
+
+            <h3>5. Servidor Propio</h3>
+            <p>Si tienes hosting web, simplemente sube el HTML vía FTP o panel de control.</p>
+
+            <div class="grid">
+                <div class="card">
+                    <h4>GitHub Pages</h4>
+                    <p><span class="badge">Gratis</span> <span class="badge pro">SSL</span></p>
+                    <p>Mejor para: Documentación, portfolios, reportes públicos</p>
+                </div>
+                <div class="card">
+                    <h4>Netlify/Vercel</h4>
+                    <p><span class="badge">Gratis</span> <span class="badge pro">Rápido</span></p>
+                    <p>Mejor para: Proyectos sin GitHub, drag & drop</p>
+                </div>
+                <div class="card">
+                    <h4>Google Drive</h4>
+                    <p><span class="badge">Privado</span></p>
+                    <p>Mejor para: Reportes internos, colaboración</p>
+                </div>
+                <div class="card">
+                    <h4>Email</h4>
+                    <p><span class="badge">Directo</span></p>
+                    <p>Mejor para: Entregas específicas, clientes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 5: Limitaciones y Consideraciones -->
+        <div class="section">
+            <h2>⚖️ Limitaciones y Consideraciones Técnicas</h2>
+
+            <h3>Límites de Tokens</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Límite</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ventana de contexto</strong></td>
+                        <td>~200,000 tokens</td>
+                        <td>Todo el historial + tu prompt + respuesta</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Respuesta máxima</strong></td>
+                        <td>~8,000 tokens</td>
+                        <td>Por respuesta individual de Claude</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Archivo HTML típico</strong></td>
+                        <td>~2,000-4,000 tokens</td>
+                        <td>Reporte estándar con CSS y estructura</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Conversación completa</strong></td>
+                        <td>Varios MB acumulados</td>
+                        <td>Claude mantiene contexto de toda la sesión</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning">
+                Si tu reporte es muy extenso (>5000 líneas de código), pide a Claude que lo divida en módulos o archivos separados.
+            </div>
+
+            <h3>Restricciones por Tipo de Cuenta</h3>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4>Claude Free</h4>
+                    <span class="badge">Gratuito</span>
+                    <ul>
+                        <li>✅ Generación de HTML completo</li>
+                        <li>✅ Descarga de archivos</li>
+                        <li>⚠️ Límite de mensajes por día (variable)</li>
+                        <li>⚠️ Sin prioridad en respuestas</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Claude Pro</h4>
+                    <span class="badge pro">$20/mes</span>
+                    <ul>
+                        <li>✅ 5x más mensajes</li>
+                        <li>✅ Acceso prioritario</li>
+                        <li>✅ Sesiones más largas</li>
+                        <li>✅ Acceso a Claude Sonnet 4.5</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tip">
+                Para uso profesional frecuente, Claude Pro vale la pena. Para reportes ocasionales, la cuenta gratuita es suficiente.
+            </div>
+
+            <h3>Consideraciones Técnicas</h3>
+            
+            <div class="warning">
+                <strong>Claude NO puede:</strong><br>
+                • Ejecutar JavaScript para generar datos dinámicos en tiempo real<br>
+                • Conectarse a bases de datos directamente<br>
+                • Generar gráficos desde datos externos (debe usar librerías como Chart.js con datos estáticos)<br>
+                • Almacenar archivos permanentemente (debes descargarlos)
+            </div>
+
+            <div class="tip">
+                <strong>Claude SÍ puede:</strong><br>
+                • Generar HTML/CSS/JavaScript completo y funcional<br>
+                • Crear gráficos con Chart.js usando datos que tú proporciones<br>
+                • Hacer reportes responsive y print-friendly<br>
+                • Iterar y mejorar el diseño según feedback
+            </div>
+        </div>
+
+        <!-- Sección 6: Mejores Prácticas -->
+        <div class="section">
+            <h2>🎯 Mejores Prácticas y Tips</h2>
+
+            <h3>Para Prompts Efectivos</h3>
+            <ul>
+                <li><strong>Empieza simple:</strong> Solicita la estructura básica primero, luego refiná.</li>
+                <li><strong>Proporciona ejemplos:</strong> Si tenés datos reales, incluí una muestra.</li>
+                <li><strong>Sé específico con colores:</strong> Usa códigos hex (#3483FA) en lugar de "azul".</li>
+                <li><strong>Menciona el público objetivo:</strong> "Para ejecutivos" vs "Para equipo técnico" cambia el diseño.</li>
+                <li><strong>Pide explicaciones:</strong> "Explica por qué elegiste esta estructura" te ayuda a entender.</li>
+            </ul>
+
+            <h3>Para Reportes Profesionales</h3>
+            <ul>
+                <li>✅ Incluí fuentes legibles (mínimo 14px para cuerpo)</li>
+                <li>✅ Usá contraste adecuado (texto oscuro sobre fondo claro)</li>
+                <li>✅ Agregá espaciado generoso entre secciones</li>
+                <li>✅ Hacé que sea responsive (media queries para móvil)</li>
+                <li>✅ Optimizá para impresión (@media print)</li>
+                <li>✅ Incluí metadata (título, descripción, autor en &lt;head&gt;)</li>
+            </ul>
+
+            <h3>Para Iteración Eficiente</h3>
+            <div class="code-block">
+                <pre>Ejemplos de pedidos iterativos:
+
+"Agregá un gráfico de torta para mostrar la distribución por categoría"
+
+"Cambiá el color del header a un degradado de azul a celeste"
+
+"Hacé que la tabla sea ordenable al hacer clic en las columnas"
+
+"Optimizá el diseño para que se imprima bien en una página A4"
+
+"Agregá animaciones sutiles cuando el usuario haga scroll"</pre>
+            </div>
+
+            <div class="tip">
+                Guardá versiones de tu reporte. Cada iteración puede nombrarse: <code>reporte_v1.html</code>, <code>reporte_v2.html</code>, etc.
+            </div>
+        </div>
+
+        <!-- Sección 7: Ejemplo Completo Paso a Paso -->
+        <div class="section">
+            <h2>📝 Ejemplo Completo: De Cero a Publicado</h2>
+
+            <h3>Escenario: Reporte de Ventas Mensual</h3>
+            
+            <ol class="steps">
+                <li>
+                    <strong>Pedido inicial a Claude:</strong>
+                    <div class="code-block">
+                        <pre>"Crea un reporte HTML de ventas mensuales con:
+- KPIs: Ventas totales, crecimiento, ticket promedio
+- Tabla de productos top 10
+- Gráfico de ventas por semana
+- Usa colores de Mercado Libre
+- Diseño responsive"</pre>
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Claude genera el archivo</strong> y te proporciona un enlace de descarga.
+                </li>
+
+                <li>
+                    <strong>Revisás el resultado</strong> y pedís ajustes:
+                    <div class="code-block">
+                        <pre>"Agregá un footer con la fecha de generación y hacé que los KPIs tengan iconos"</pre>
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Claude actualiza el archivo</strong> con los cambios solicitados.
+                </li>
+
+                <li>
+                    <strong>Descargás el HTML final</strong> desde el enlace que Claude te proporciona.
+                </li>
+
+                <li>
+                    <strong>Publicás en GitHub Pages:</strong>
+                    <ul>
+                        <li>Creás repo: <code>reporte-ventas-nov2024</code></li>
+                        <li>Subís el HTML como <code>index.html</code></li>
+                        <li>Activás GitHub Pages en Settings</li>
+                        <li>URL final: <code>https://tuusuario.github.io/reporte-ventas-nov2024/</code></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Compartís la URL</strong> con tu equipo o clientes. ¡Listo!
+                </li>
+            </ol>
+        </div>
+
+        <!-- Sección 8: Recursos Adicionales -->
+        <div class="section">
+            <h2>📚 Recursos Adicionales</h2>
+
+            <h3>Librerías Útiles para Reportes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Librería</th>
+                        <th>Uso</th>
+                        <th>CDN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Chart.js</strong></td>
+                        <td>Gráficos interactivos</td>
+                        <td><code>https://cdn.jsdelivr.net/npm/chart.js</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DataTables</strong></td>
+                        <td>Tablas ordenables y filtrables</td>
+                        <td><code>https://cdn.datatables.net/</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Font Awesome</strong></td>
+                        <td>Iconos profesionales</td>
+                        <td><code>https://cdnjs.cloudflare.com/ajax/libs/font-awesome/</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tailwind CSS</strong></td>
+                        <td>Framework CSS rápido</td>
+                        <td><code>https://cdn.tailwindcss.com</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Enlaces Útiles</h3>
+            <a href="https://pages.github.com/" class="button">GitHub Pages Docs</a>
+            <a href="https://www.netlify.com/" class="button secondary">Netlify</a>
+            <a href="https://www.chartjs.org/" class="button secondary">Chart.js Docs</a>
+            <a href="https://www.anthropic.com/claude" class="button secondary">Claude by Anthropic</a>
+
+            <div class="tip">
+                Podés pedirle a Claude que integre cualquiera de estas librerías en tu reporte. Solo mencioná en tu prompt: "Usa Chart.js para los gráficos" o "Incluí Font Awesome para los iconos".
+            </div>
+        </div>
+
+        <!-- Sección Final: Checklist -->
+        <div class="section">
+            <h2>✅ Checklist Final: Antes de Publicar</h2>
+
+            <div class="grid">
+                <div class="card">
+                    <h4>Contenido</h4>
+                    <ul>
+                        <li>☑️ Datos verificados y actualizados</li>
+                        <li>☑️ Sin errores ortográficos</li>
+                        <li>☑️ Conclusiones claras</li>
+                        <li>☑️ Metadata completa (título, descripción)</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Diseño</h4>
+                    <ul>
+                        <li>☑️ Colores consistentes con marca</li>
+                        <li>☑️ Responsive en móvil</li>
+                        <li>☑️ Legible en print</li>
+                        <li>☑️ Carga rápida (< 3 segundos)</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Funcionalidad</h4>
+                    <ul>
+                        <li>☑️ Todos los enlaces funcionan</li>
+                        <li>☑️ Gráficos se cargan correctamente</li>
+                        <li>☑️ Tablas son ordenables (si aplica)</li>
+                        <li>☑️ Sin errores de consola JavaScript</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Publicación</h4>
+                    <ul>
+                        <li>☑️ Archivo renombrado correctamente</li>
+                        <li>☑️ URL personalizada configurada</li>
+                        <li>☑️ Permisos de acceso definidos</li>
+                        <li>☑️ Backup del archivo guardado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            <p><strong>Guía Completa: Reportes HTML con Claude</strong></p>
+            <p>Creado con Claude • Colores inspirados en Mercado Libre • Diciembre 2025</p>
+            <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">
+                Esta guía es un recurso educativo. Los límites y características pueden variar según las actualizaciones de Claude.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
